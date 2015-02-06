@@ -38,6 +38,17 @@ The options below are all specified on the command-line.
   If this address is not routable, the node will be in a constant flapping state,
   as other nodes will treat the non-routability as a failure.
 
+* `-atlas` - This flag enables [Atlas](https://atlas.hashicorp.com) integration.
+  It is used to provide the Atlas infrastructure name and the SCADA connection.
+  This enables Atlas features such as the dashboard and node auto joining.
+
+* `-atlas-join` - When set, enables auto-join via Atlas. Atlas will track the most
+  recent members to join the infrastructure named by `-atlas` and automatically
+  join them on start. For servers, the LAN and WAN pool are both joined.
+
+* `-atlas-token` - Provides the Atlas API authentication token. This can also be provided
+  using the `ATLAS_TOKEN` environment variable. Required for use with Atlas.
+
 * `-bootstrap` - This flag is used to control if a server is in "bootstrap" mode. It is important that
   no more than one server *per* datacenter be running in this mode. Technically, a server in bootstrap mode
   is allowed to self-elect as the Raft leader. It is important that only a single node is in this mode,
@@ -232,7 +243,6 @@ definitions support being updated during a reload.
    by providing the ?token parameter. When not provided, the empty token is used
    which maps to the 'anonymous' ACL policy.
 
-
 * `acl_ttl` - Used to control Time-To-Live caching of ACLs. By default this
    is 30 seconds. This setting has a major performance impact: reducing it will
    cause more frequent refreshes, while increasing it reduces the number of caches.
@@ -260,6 +270,16 @@ definitions support being updated during a reload.
   * `rpc` - The RPC endpoint. Defaults to `client_addr`
 
 * `advertise_addr` - Equivalent to the `-advertise` command-line flag.
+
+* `atlas_acl_token` - When provided, any requests made by Atlas will use this ACL
+   token unless explicitly overriden. When not provided the `acl_token` is used.
+   This can be set to 'anonymous' to reduce permission below that of `acl_token`.
+
+* `atlas_infrastructure` - Equivalent to the `-atlas` command-line flag.
+
+* `atlas_join` - Equivalent to the `-atlas-join` command-line flag.
+
+* `atlas_token` - Equivalent to the `-atlas-token` command-line flag.
 
 * `bootstrap` - Equivalent to the `-bootstrap` command-line flag.
 
